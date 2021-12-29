@@ -144,5 +144,38 @@ void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)�
         }
     }
 ```    
+函数bool ifcoll()用于判断奶牛是否将要发生碰撞以及将和什么物体发生碰撞，判断的结果影响divert()中的转向的效果。
+```C#
+    bool ifcoll()
+    {
+	float distance = (transform.position - cowother.transform.position).magnitude;
+	float distance2 = (transform.position - dog.transform.position).magnitude;
+	float distance3 = (transform.position - tree.transform.position).magnitude;
+	cowflag = 0;
+	if (distance3 < 8)
+	{
+		treeflag = true;
+		return true;
+	}
+	else 
+		treeflag = false;
+	if (distance > 8 && distance2 > 2)
+	{
+	    return false;
+	}
+	else if (distance < 9)
+	{
+	    Debug.Log("collision cows");
+	    cowflag = 1;
+	    return true;
+	}
+	else
+	{
+	    Debug.Log("collision dog");
+	    cowflag = 2;
+	    return true;
+	}
+    }
 
+```
 
