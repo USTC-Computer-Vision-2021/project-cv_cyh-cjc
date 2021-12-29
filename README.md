@@ -115,7 +115,7 @@ void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)�
     }
 ```
 函数bool ifout()根据物体的位置和方向判定动物是否出界。flag类似于锁存器，保证mark记录的是出界瞬间的方向。
-```
+```C#
     bool ifout()
     {
         if (transform.position.z < -3 || transform.position.z > 23 || transform.position.x > 0 || transform.position.x < -19)
@@ -123,19 +123,19 @@ void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)�
             if(flag == false)
             {
                 mark = transform.localEulerAngles.y;
-				flag = true;
-				return true;
+		flag = true;
+		return true;
             }
-			if (transform.position.z < -3 && (transform.localEulerAngles.y <30 || transform.localEulerAngles.y > 330))
-				return false;
-			else if (transform.position.z > 23 && (transform.localEulerAngles.y > 150 && transform.localEulerAngles.y < 210))
-				return false;
-			else if (transform.position.x > 13 && (transform.localEulerAngles.y > 240 && transform.localEulerAngles.y < 300))
-				return false;
-			else if (transform.position.x < -19 && (transform.localEulerAngles.y > 60 && transform.localEulerAngles.y < 120))
-				return false;
-			else
-				return true;         
+	    if (transform.position.z < -3 && (transform.localEulerAngles.y <30 || transform.localEulerAngles.y > 330))
+		return false;
+	    else if (transform.position.z > 23 && (transform.localEulerAngles.y > 150 && transform.localEulerAngles.y < 210))
+		return false;
+	    else if (transform.position.x > 13 && (transform.localEulerAngles.y > 240 && transform.localEulerAngles.y < 300))
+		return false;
+	    else if (transform.position.x < -19 && (transform.localEulerAngles.y > 60 && transform.localEulerAngles.y < 120))
+		return false;
+	    else
+		return true;         
         }
         else
         {
