@@ -9,13 +9,7 @@
   * 动作设计
   * 代码实现
 ## 问题描述
-我们选择的是实现AR。由于上课时老师提供的Aartoolkit年代久远，已经难以使用，
-因此我们选择使用Vuforia作为AR的使用接口。AR的3D场景生成由Unity实现。
-我们实现的场景是一个乡村牧场，牧场里有奶牛和狗随机游走，
-奶牛随机选择行走或者停止吃草。动物的行动有一定限制，一旦走到达到场景边界或者即将与其他物体碰撞，
-则转向或者停止运动。
-AR的实现分为两个部分。第一部分是识别出预先设定好的图片并估计平面在现实的三维中的位姿，第二部分是在识别的图片（平面）上生成3维场景。
-项目中第一部分的实现由Vuforia引擎提供的接口实现，第二部分通过在Unity中设置场景，编写控制代码实现。
+我们选择的是实现AR。由于上课时老师提供的Aartoolkit年代久远，已经难以使用，因此我们选择使用Vuforia作为AR的使用接口。AR的3D场景生成由Unity实现。我们实现的场景是一个乡村牧场，牧场里有奶牛和狗随机游走，奶牛随机选择行走或者停止吃草。动物的行动有一定限制，一旦走到达到场景边界或者即将与其他物体碰撞，则转向或者停止运动。AR的实现分为两个部分。第一部分是识别出预先设定好的图片并估计平面在现实的三维中的位姿，第二部分是在识别的图片（平面）上生成3维场景。项目中第一部分的实现由Vuforia引擎提供的接口实现，第二部分通过在Unity中设置场景，编写控制代码实现。
 
 ## 代码实现
 ### 状态控制
@@ -119,7 +113,36 @@ void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)�
              transform.Rotate(Vector3.up, Time.deltaTime * 50);
         }
     }
-
-
+```
+函数bool ifout()根据物体的位置和方向判定动物是否出界。flag类似于锁存器，保证mark记录的是出界瞬间的方向。
+```
+    bool ifout()
+    {
+        if (transform.position.z < -3 || transform.position.z > 23 || transform.position.x > 0 || transform.position.x < -19)
+        {
+            if(flag == false)
+            {
+                mark = transform.localEulerAngles.y;
+				flag = true;
+				return true;
+            }
+			if (transform.position.z < -3 && (transform.localEulerAngles.y <30 || transform.localEulerAngles.y > 330))
+				return false;
+			else if (transform.position.z > 23 && (transform.localEulerAngles.y > 150 && transform.localEulerAngles.y < 210))
+				return false;
+			else if (transform.position.x > 13 && (transform.localEulerAngles.y > 240 && transform.localEulerAngles.y < 300))
+				return false;
+			else if (transform.position.x < -19 && (transform.localEulerAngles.y > 60 && transform.localEulerAngles.y < 120))
+				return false;
+			else
+				return true;         
+        }
+        else
+        {
+            flag = false;
+            return false;
+        }
+    }
+```    
 
 
