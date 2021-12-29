@@ -11,6 +11,9 @@
 ## 问题描述
 我们选择的是实现AR。由于上课时老师提供的Aartoolkit年代久远，已经难以使用，因此我们选择使用Vuforia作为AR的使用接口。AR的3D场景生成由Unity实现。我们实现的场景是一个乡村牧场，牧场里有奶牛和狗随机游走，奶牛随机选择行走或者停止吃草。动物的行动有一定限制，一旦走到达到场景边界或者即将与其他物体碰撞，则转向或者停止运动。AR的实现分为两个部分。第一部分是识别出预先设定好的图片并估计平面在现实的三维中的位姿，第二部分是在识别的图片（平面）上生成3维场景。项目中第一部分的实现由Vuforia引擎提供的接口实现，第二部分通过在Unity中设置场景，编写控制代码实现。
 
+## 原理分析
+
+
 ## 代码实现
 项目中的3D模型、场景和动画在Unity的asset store（https://assetstore.unity.com/
 ）
@@ -184,3 +187,24 @@ void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)�
 ```
 狗的运动控制由DogRoam.cs实现，实现内容与RandomRoam.cs类似。只是在狗的动画中包含locomotion、Sitting和bark而奶牛只有locomotion和Eat。鸡的控制由chicken.cs实现，里面只有Eat和站着不动两个状态。
 
+
+## 工程结构
+    .
+    ├── code(/Assets/Scipts)
+    │   ├── chicken.cs
+    │   └── DogRoam.cs
+    │   └── DogRoam.cs
+    ├── Scenes
+    │   ├── Main Camera
+    │   └── AR Camera
+    │   └── ImageTarget
+    │       ├── farm
+    └── output
+        └── dazuoye.apk
+
+
+## 运行说明
+    Unity Hub==2.4.5
+    Unity==2018.4.36f1
+    Android Build Support
+    Vuforia Augmented Reality
