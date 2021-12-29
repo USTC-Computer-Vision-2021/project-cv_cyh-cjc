@@ -12,9 +12,13 @@
 我们选择的是实现AR。由于上课时老师提供的Aartoolkit年代久远，已经难以使用，因此我们选择使用Vuforia作为AR的使用接口。AR的3D场景生成由Unity实现。我们实现的场景是一个乡村牧场，牧场里有奶牛和狗随机游走，奶牛随机选择行走或者停止吃草。动物的行动有一定限制，一旦走到达到场景边界或者即将与其他物体碰撞，则转向或者停止运动。AR的实现分为两个部分。第一部分是识别出预先设定好的图片并估计平面在现实的三维中的位姿，第二部分是在识别的图片（平面）上生成3维场景。项目中第一部分的实现由Vuforia引擎提供的接口实现，第二部分通过在Unity中设置场景，编写控制代码实现。
 
 ## 代码实现
-### 状态控制
-奶牛的运动控制由RandomRoam.cs实现。代码中的类RandomRoam继承了Unity中的预定义的类。
-void Start()在动画开始时被调用，用于初始化一些参数，例如该物体的动画组件playerAnim，其他物体（树，另一只奶牛和一只狗）。InvokeRepeating("StateControl", startDelay, repeatRate);
+项目中的3D模型、场景和动画在Unity的asset store（https://assetstore.unity.com/
+）
+和Unity的官方教程（https://learn.unity.com/tutorial
+）
+中提供。代码部分由参考了教程中的例子后自己实现。  
+
+奶牛的运动控制由RandomRoam.cs实现。代码中的类RandomRoam继承了Unity中的预定义的类。void Start()在动画开始时被调用，用于初始化一些参数，例如该物体的动画组件playerAnim，其他物体（树，另一只奶牛和一只狗）。InvokeRepeating("StateControl", startDelay, repeatRate);
 用于以给定时间间隔调用StateControl()函数决定物体的运动状态。
 ```
     void Start()
@@ -178,4 +182,5 @@ void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)�
     }
 
 ```
+狗的运动控制由DogRoam.cs实现，实现内容与RandomRoam.cs类似。只是在狗的动画中包含locomotion、Sitting和bark而奶牛只有locomotion和Eat。鸡的控制由chicken.cs实现，里面只有Eat和站着不动两个状态。
 
