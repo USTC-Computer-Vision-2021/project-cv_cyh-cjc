@@ -187,7 +187,10 @@ void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)�
 ```
 狗的运动控制由DogRoam.cs实现，实现内容与RandomRoam.cs类似。只是在狗的动画中包含locomotion、Sitting和bark而奶牛只有locomotion和Eat。鸡的控制由chicken.cs实现，里面只有Eat和站着不动两个状态。
 
+## 运行效果
+Unity中设置的场景动画
 
+![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/Unity_onPC.gif)
 ## 工程结构
     .
     ├── code(/Assets/Scipts)
