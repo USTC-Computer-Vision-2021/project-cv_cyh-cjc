@@ -13,10 +13,3 @@
     AR的实现分为两个部分。第一部分是识别出预先设定好的图片并估计平面在现实的三维中的位姿，第二部分是在识别的图片（平面）上生成3维场景。项目中第一部分的实现由Vuforia引擎提供的接口实现，第二部分通过在Unity中设置场景，编写控制代码实现。
 
 ## 代码实现
-'''
-    private float mark;
-    public bool ifinside = true;
-    private float startDelay = 0;
-    private float repeatRate = 5;
-    private Animator playerAnim;
-    private bool flag = false;
