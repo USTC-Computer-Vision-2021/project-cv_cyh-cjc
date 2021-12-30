@@ -232,9 +232,7 @@ Unity中设置的场景动画
 
 ![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/our_marker.jpg)
 
-![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/Work_in_app1.gif)
-
-![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/Work_in_app2.gif)
+![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/effect.gif)
 
 ## 工程结构
     .
