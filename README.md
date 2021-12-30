@@ -73,7 +73,7 @@
 ```
 
 函数void Update在动画运行的每一帧被调用，这个函数直接控制奶牛的运动和动画。ifout()和ifcoll()用于判断奶牛是否出界或是否将发生碰撞。如果触发任意一个限制，则执行divert()转向避让，转向的逻辑在自定义函数void divert()中实现。如果这两个限制都没有触发，则奶牛处于行走或者停下状态中。状态由随机变量state_walk决定。如果state_walk≥5则行走，同时关闭吃草的动画playerAnim.SetBool("Eat_b", false)。直线运动由Unity提供的transform.Translate()实现，转向由transform.Rotate()实现。行走的速度、方向都是在StateControl()赋值的随机变量。如果不行走，则停下并触发吃草的动画playerAnim.SetBool("Eat_b", true)。
-```
+```C#
     void Update()
     {
         treeflag = false;
@@ -98,7 +98,7 @@
 ```  
 void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)、撞动物3种情况考虑。在转向时考虑两个物体之间的角度关系使转向的效果更自然。变量mark记录出界瞬间时的方向，在函数ifout()中更新。
 
-```
+```C#
     void divert()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * speed_walk);
