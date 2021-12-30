@@ -9,9 +9,32 @@
   * 动作设计
   * 代码实现
 ## 问题描述
-我们选择的是实现AR。由于上课时老师提供的Aartoolkit年代久远，已经难以使用，因此我们选择使用Vuforia作为AR的使用接口。AR的3D场景生成由Unity实现。我们实现的场景是一个乡村牧场，牧场里有奶牛和狗随机游走，奶牛随机选择行走或者停止吃草。动物的行动有一定限制，一旦走到达到场景边界或者即将与其他物体碰撞，则转向或者停止运动。AR的实现分为两个部分。第一部分是识别出预先设定好的图片并估计平面在现实的三维中的位姿，第二部分是在识别的图片（平面）上生成3维场景。项目中第一部分的实现由Vuforia引擎提供的接口实现，第二部分通过在Unity中设置场景，编写控制代码实现。
+我们选择的是实现AR。由于上课时老师提供的Artoolkit年代久远，已经难以使用，因此我们选择使用Vuforia作为AR的使用接口。AR的3D场景生成由Unity实现。我们实现的场景是一个乡村牧场，牧场里有奶牛和狗、和家鸡。家鸡被圈养着，时不时地吃地上的虫，奶牛随机选择行走或者停止吃草，而狗也是随机选择步行或吠，在靠近奶牛时则会坐下歇息。动物的行动有一定限制，一旦走到达到场景边界或者即将与其他物体碰撞，则转向或者停止运动。AR的实现分为两个部分。第一部分是识别出预先设定好的图片并估计平面在现实的三维中的位姿，第二部分是在识别的图片（平面）上生成3维场景。项目中第一部分的实现由Vuforia引擎提供的接口实现，第二部分通过在Unity中设置场景，编写控制代码实现。
 
 ## 原理分析
+增强现实，即AR，是通过电脑技术，将虚拟的信息应用到真实的世界，真实的环境和虚拟的物体实时地叠加到同一个画面或空间同时存在的一项技术。
+其实现分为两类，一类是基于Marker（指定目标图片）的技术；一类是基于GPS地理信息的技术。在该项目中，我们使用的是前者。
+
+### 1.基于Marker的技术
+1）先设置识别标识marker
+
+2）摄像头对现实场景进行拍摄，对marker进行识别和姿态评估，并确定其位置
+
+![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/AR_.jpg)
+
+3）利用3D投影几何的知识，从模板坐标系变换到真实的屏幕坐标系并展示出来；这需要模板坐标系先旋转平移到摄像机坐标系（利用摄像机外参矩阵变换），再从摄像机坐标系映射到屏幕坐标系（利用摄像机内参矩阵变换）
+
+![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/AR_1.jpg)
+
+### 2.基于GPS地理信息的技术
+1）通过GPS获取用户的地理位置
+
+2）然后从某些数据源（比如wiki，google）等处获取该位置附近物体（如周围的餐馆，银行，学校等）的POI信息
+
+3）再通过移动设备的电子指南针和加速度传感器获取用户手持设备的方向和倾斜角度，通过这些信息建立目标物体在现实场景中的平面基准
+
+4）最后再进行坐标变换显示，原理与基于Marker的类似
+
 
 
 ## 代码实现
@@ -191,16 +214,25 @@ void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)�
 Unity中设置的场景动画
 
 ![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/Unity_onPC.gif)
+
+安卓安卓应用并对着我们设置的marker实物或图片拍摄即可演示
+
+![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/our_marker.jpg)
+
+![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/Work_in_app1.gif)
+
+![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/Work_in_app2.gif)
+
 ## 工程结构
     .
     ├── code(/Assets/Scipts)
     │   ├── chicken.cs
     │   └── DogRoam.cs
-    │   └── RandomRoam.cs
+    │   └── DogRoam.cs
     ├── Scenes
     │   ├── Main Camera
     │   └── AR Camera
-    │   └── ImageTarget
+    │   └── ImageTarget(Marker(our_marker.jpg))
     │       ├── farm
     └── output
         └── dazuoye.apk
@@ -208,6 +240,4 @@ Unity中设置的场景动画
 
 ## 运行说明
     Unity Hub==2.4.5
-    Unity==2018.4.36f1
-    Android Build Support
-    Vuforia Augmented Reality
+    Unity==2018.4.36f1(Android Build Support,Vuforia Augmented Reality)
