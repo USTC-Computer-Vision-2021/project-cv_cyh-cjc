@@ -100,9 +100,11 @@ public class RandomRoam : MonoBehaviour
 		{
 			Vector3 direction = tree.transform.position - transform.position;
 			float degree = Vector3.Angle (direction, transform.forward);
-			if (degree > 0)
+			Vector3 direction = tree.transform.position - transform.position;
+			float degree = Vector3.Angle (direction, transform.forward);
+			if (degree > 0 && degree < 120)
 				transform.Rotate(Vector3.up, -Time.deltaTime * 50);
-			else
+			else if (degree < 0 && degree > -120)
 				transform.Rotate(Vector3.up, Time.deltaTime * 50);
 		}
 		else{
@@ -112,9 +114,9 @@ public class RandomRoam : MonoBehaviour
 			else
 				direction = dog.transform.position - transform.position;
 			float degree = Vector3.Angle (direction, transform.forward);
-			if (degree > 0)
+			if (degree > 0 && degree < 120)
 				transform.Rotate(Vector3.up, -Time.deltaTime * 50);
-			else
+			else if (degree < 0 && degree > -120)
 				transform.Rotate(Vector3.up, Time.deltaTime * 50);
 		}
     }
