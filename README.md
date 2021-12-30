@@ -215,7 +215,7 @@ Unity中设置的场景动画
 
 ![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/Unity_onPC.gif)
 
-安卓安卓应用并对着我们设置的marker实物或图片拍摄即可演示
+安装安卓应用并对着我们设置的marker实物或图片拍摄即可演示
 
 ![](https://github.com/USTC-Computer-Vision-2021/project-cv_cyh-cjc/blob/main/.github/our_marker.jpg)
 
