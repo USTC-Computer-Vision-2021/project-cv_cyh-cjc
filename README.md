@@ -196,7 +196,7 @@ Unity中设置的场景动画
     ├── code(/Assets/Scipts)
     │   ├── chicken.cs
     │   └── DogRoam.cs
-    │   └── DogRoam.cs
+    │   └── RandomRoam.cs
     ├── Scenes
     │   ├── Main Camera
     │   └── AR Camera
