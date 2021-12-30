@@ -76,10 +76,12 @@
 ```C#
     void Update()
     {
+        x = transform.position.x;
+        z = transform.position.z;
         treeflag = false;
         if (!ifout()&&!ifcoll())
         {
-            if (state_walk >= 5)
+            if (state_walk >= 0)
             {
                 playerAnim.SetBool("Eat_b", false);
                 transform.Translate(Vector3.forward * Time.deltaTime * speed_walk);
@@ -90,7 +92,7 @@
                 playerAnim.SetBool("Eat_b", true);
             }
         }
-		      else
+	else
         {
             divert();
         }
@@ -102,53 +104,56 @@ void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)�
     void divert()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * speed_walk);
-        if (treeflag==false && cowflag==0)
-        {
-            if (mark > 0 && mark < 90)
-            {
-             transform.Rotate(Vector3.up, Time.deltaTime * 50);
-            }
-            else if (mark > 90 && mark < 180)
-            {
-             transform.Rotate(Vector3.up, -Time.deltaTime * 50);
-            }
-            else if(mark > 180 && mark < 270)
-            {
-             transform.Rotate(Vector3.up, Time.deltaTime * 50);
-            }
-            else
-            {
-             transform.Rotate(Vector3.up, -Time.deltaTime * 50);
-            }
-        }
-        else if(treeflag==true)
-        {
-            Vector3 direction = tree.transform.position - transform.position;
-            float degree = Vector3.Angle (direction, transform.forward);
-            if (degree > 0)
-             transform.Rotate(Vector3.up, -Time.deltaTime * 50);
-            else
-             transform.Rotate(Vector3.up, Time.deltaTime * 50);
-        }
-        else{
-            Vector3 direction;
-            if (cowflag == 1)
-             direction = cowother.transform.position - transform.position;
-            else
-             direction = dog.transform.position - transform.position;
-            float degree = Vector3.Angle (direction, transform.forward);
-            if (degree > 0)
-             transform.Rotate(Vector3.up, -Time.deltaTime * 50);
-            else
-             transform.Rotate(Vector3.up, Time.deltaTime * 50);
-        }
+	if (treeflag==false && cowflag==0)
+	{
+	    if (mark > 0 && mark < 90)
+	    {
+		transform.Rotate(Vector3.up, Time.deltaTime * 50);
+	    }
+	    else if (mark > 90 && mark < 180)
+	    {
+		transform.Rotate(Vector3.up, -Time.deltaTime * 50);
+	    }
+	    else if(mark > 180 && mark < 270)
+	    {
+	        transform.Rotate(Vector3.up, Time.deltaTime * 50);
+     	    }
+	    else
+  	    {
+		transform.Rotate(Vector3.up, -Time.deltaTime * 50);
+	    }
+	}
+	else if(treeflag==true)
+	{
+	    Vector3 direction = tree.transform.position - transform.position;
+	    float degree = Vector3.Angle (direction, transform.forward);
+	    Vector3 direction = tree.transform.position - transform.position;
+	    float degree = Vector3.Angle (direction, transform.forward);
+       	    if (degree > 0 && degree < 120)
+		transform.Rotate(Vector3.up, -Time.deltaTime * 50);
+	    else if (degree < 0 && degree > -120)
+		transform.Rotate(Vector3.up, Time.deltaTime * 50);
+	}
+	else
+	{
+	    Vector3 direction;
+	    if (cowflag == 1)
+		direction = cowother.transform.position - transform.position;
+	    else
+		direction = dog.transform.position - transform.position;
+	    float degree = Vector3.Angle (direction, transform.forward);
+	    if (degree > 0 && degree < 120)
+		transform.Rotate(Vector3.up, -Time.deltaTime * 50);
+	    else if (degree < 0 && degree > -120)
+		transform.Rotate(Vector3.up, Time.deltaTime * 50);
+	}
     }
 ```
 函数bool ifout()根据物体的位置和方向判定动物是否出界。flag类似于锁存器，保证mark记录的是出界瞬间的方向。
 ```C#
     bool ifout()
     {
-        if (transform.position.z < -3 || transform.position.z > 23 || transform.position.x > 0 || transform.position.x < -19)
+        if (transform.position.z < -15 || transform.position.z > 15 || transform.position.x > 2 || transform.position.x < -19)
         {
             if(flag == false)
             {
@@ -156,16 +161,26 @@ void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)�
 		flag = true;
 		return true;
             }
-	    if (transform.position.z < -3 && (transform.localEulerAngles.y <30 || transform.localEulerAngles.y > 330))
-		return false;
-	    else if (transform.position.z > 23 && (transform.localEulerAngles.y > 150 && transform.localEulerAngles.y < 210))
-		return false;
-	    else if (transform.position.x > 13 && (transform.localEulerAngles.y > 240 && transform.localEulerAngles.y < 300))
-		return false;
-	    else if (transform.position.x < -19 && (transform.localEulerAngles.y > 60 && transform.localEulerAngles.y < 120))
-		return false;
-	    else
-		return true;         
+            if (transform.position.z < -15 && (transform.localEulerAngles.y < 30 || transform.localEulerAngles.y > 330))
+            {
+                return false;
+            }
+            else if (transform.position.z > 15 && (transform.localEulerAngles.y > 150 && transform.localEulerAngles.y < 210))
+            {
+                return false;
+            }
+            else if (transform.position.x > 2 && (transform.localEulerAngles.y > 240 && transform.localEulerAngles.y < 300))
+            {
+                return false;
+            }
+            else if (transform.position.x < -19 && (transform.localEulerAngles.y > 60 && transform.localEulerAngles.y < 120))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
         else
         {
@@ -184,27 +199,25 @@ void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)�
 	cowflag = 0;
 	if (distance3 < 8)
 	{
-		treeflag = true;
-		return true;
+	    treeflag = true;
+	    return true;
 	}
 	else 
-		treeflag = false;
-	if (distance > 8 && distance2 > 2)
-	{
-	    return false;
-	}
-	else if (distance < 9)
-	{
-	    Debug.Log("collision cows");
-	    cowflag = 1;
-	    return true;
-	}
-	else
-	{
-	    Debug.Log("collision dog");
-	    cowflag = 2;
-	    return true;
-	}
+	    treeflag = false;
+        if (distance > 9 && distance2 > 7)
+        {
+            return false;
+        }
+        else if (distance < 9)
+        {
+            cowflag = 1;
+            return true;
+        }
+        else
+        {
+            cowflag = 2;
+            return true;
+        }
     }
 
 ```
