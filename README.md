@@ -221,7 +221,48 @@ void divert()分出界(treeflag==false && cowflag==0)、撞树(treeflag==true)�
     }
 
 ```
-狗的运动控制由DogRoam.cs实现，实现内容与RandomRoam.cs类似。只是在狗的动画中包含locomotion、Sitting和bark而奶牛只有locomotion和Eat。鸡的控制由chicken.cs实现，里面只有Eat和站着不动两个状态。
+鸡的控制由chicken.cs实现，里面只有Eat和站着不动两个状态，代码比较简单就不解释了。
+狗的控制由DogRoam.cs实现，狗将随机选择其中一头牛作为运动的目标向其靠近，当达到一定距离内之后坐下。其中变量state_target在void StateControl()中被赋值，StateControl()函数与控制奶牛的脚本中的StateControl()类似，只是多了对state_target赋随机值。
+```C#
+void Update()
+    {
+        treeflag = false;
+        if(state_target>=0)
+        {
+            target = cow1;
+        }
+        else
+        {
+            target = cow2;
+        }
+        if (ifcoll() && ((cowflag == 1 && target == cow1) || (cowflag == 2 && target == cow2)))
+        {
+            Debug.Log("dog col");
+            playerAnim.SetBool("Sit_b", true);
+        }
+        else if (!(ifout() && !ifcoll()))
+        {
+            Debug.Log("walk");
+            playerAnim.SetBool("Sit_b", false);
+            playerAnim.SetBool("Bark_b", false);
+            Vector3 direction = target.transform.position - transform.position;
+            float degree = Vector3.Angle(direction, transform.forward);
+            transform.Translate(Vector3.forward * Time.deltaTime * speed_walk);
+            if (degree > 20)
+                transform.Rotate(Vector3.up, -Time.deltaTime * 50);
+            else if (degree < -20)
+                transform.Rotate(Vector3.up, Time.deltaTime * 50);
+        }
+
+	else
+        {
+            Debug.Log("dog divert");
+            playerAnim.SetBool("Sit_b", false);
+            playerAnim.SetBool("Bark_b", false);
+            divert();
+        }
+    }
+```
 
 ## 运行效果
 Unity中设置的场景动画
@@ -239,7 +280,7 @@ Unity中设置的场景动画
     ├── code(/Assets/Scipts)
     │   ├── chicken.cs
     │   └── DogRoam.cs
-    │   └── DogRoam.cs
+    │   └── RandomRoam.cs
     ├── Scenes
     │   ├── Main Camera
     │   └── AR Camera
